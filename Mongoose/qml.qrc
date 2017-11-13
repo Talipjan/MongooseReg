@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ConfigChannel.qml</file>
+        <file>MongooseFileOpen.qml</file>
+        <file>ConfigPlansh.qml</file>
+        <file>HotPanel.qml</file>
+        <file>AreaLegend.qml</file>
+        <file>ChartDraw.qml</file>
+        <file>MenyBarMongoose.qml</file>
+    </qresource>
+</RCC>
