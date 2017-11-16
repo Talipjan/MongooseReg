@@ -22,6 +22,7 @@ class ChElement : public QObject
    Q_PROPERTY(qreal   begpoint  READ begpoint  WRITE setBegpoint  NOTIFY begpointChanged)
    Q_PROPERTY(qreal   wrpoint   READ wrpoint   WRITE setWrpoint   NOTIFY wrpointChanged)
    Q_PROPERTY(qreal   curval    READ curval                       NOTIFY curvalChanged)
+   Q_PROPERTY(qreal   subval    READ subval    WRITE setSubval    NOTIFY subvalChanged)
    Q_PROPERTY(int     area      READ area      WRITE setArea      NOTIFY areaChanged)
    Q_PROPERTY(int     chanell   READ chanell   WRITE setChanell   NOTIFY chanellChanged)
    Q_PROPERTY(int     decpl     READ decpl     WRITE setDecpl     NOTIFY decplChanged)
@@ -57,6 +58,9 @@ public:
    qreal wrpoint() const;
    void setWrpoint(qreal wrpoint);
 
+   qreal subval() const;
+   void setSubval(qreal subval);
+
    int area() const;
    void setArea(int area);
 
@@ -84,6 +88,7 @@ signals:
    void divaChanged(qreal diva);
    void begpointChanged(qreal begpoint);
    void wrpointChanged(qreal wrpoint);
+   void subvalChanged(qreal subval);
    void areaChanged(int area);
    void chanellChanged(int chanell);
    void decplChanged(int decpl);
@@ -103,6 +108,7 @@ private:
    qreal   m_diva;         //цена деления
    qreal   m_begpoint;     //Начало отсчета
    qreal   m_wrpoint;      //Точка записи
+   qreal   m_subval = 0;       //
    qreal   m_curval;       //Текущие показания
    int     m_decpl;        //Цифр после запятой
    int     m_area;         //Номер области вывода

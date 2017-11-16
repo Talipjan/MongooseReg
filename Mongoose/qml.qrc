@@ -7,6 +7,6 @@
         <file>HotPanel.qml</file>
         <file>AreaLegend.qml</file>
         <file>ChartDraw.qml</file>
-        <file>MenyBarMongoose.qml</file>
+        <file>MenuBarMongoose.qml</file>
     </qresource>
 </RCC>

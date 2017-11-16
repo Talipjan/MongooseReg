@@ -36,7 +36,7 @@ void Th_device::updateTimer()
    m_data[0] = m_data[1] = m_count;
    for(int i=2;i<32;i++)
    {
-      m_data[i] = rand();
+      m_data[i] = m_count%200;
    }
    emit ThDataReadyHid(m_data);
    //QMessageBox::information(0, "Information", "Information message text");

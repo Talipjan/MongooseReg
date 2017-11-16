@@ -10,10 +10,13 @@ QT_CHARTS_USE_NAMESPACE
 ChannelModel::ChannelModel(QObject *parent):QObject(parent)
 {
    m_name = "Mongoose";
+   m_pagesize = 40;
    //m_DeepTime.resize(64);
    m_DataUE.resize(64);
    m_numch = 32;
    m_numarea = 2;
+   m_Time.append(0);
+   m_Deep.append(0);
 
    AreaDraw *area = new AreaDraw(this);
    area->setProperty("name","Дорожка 1");
@@ -29,7 +32,7 @@ ChannelModel::ChannelModel(QObject *parent):QObject(parent)
 
    area = new AreaDraw(this);
    area->setProperty("name","Дорожка 3");
-   area->setProperty("width","30");
+   area->setProperty("width","40");
    area->setProperty("begin","60");
    m_area << area;
 
@@ -38,6 +41,7 @@ ChannelModel::ChannelModel(QObject *parent):QObject(parent)
    element->setProperty("text", "Температура");
    element->setProperty("convert", "k1");
    element->setProperty("area", "1");
+   element->setProperty("diva", "0.5");
 
    m_data << element;
 
@@ -46,6 +50,7 @@ ChannelModel::ChannelModel(QObject *parent):QObject(parent)
    element->setProperty("text", "Давление");
    element->setProperty("convert", "k2*2");
    element->setProperty("area", "2");
+   element->setProperty("diva", "4");
 
    m_data << element;
 
@@ -289,6 +294,10 @@ void ChannelModel::openFile(QString file)
          {
             m_numarea = xml.readElementText().toInt();
          }
+         if (xml.name() == "pagesize")
+         {
+            m_pagesize = xml.readElementText().toFloat();
+         }
          if (xml.name() == "chelement")
          {
             attributes = xml.attributes();
@@ -414,6 +423,10 @@ void ChannelModel::saveFile(QString file)
    xmlWriter.writeCharacters(QString("%1").arg(m_numarea));
    xmlWriter.writeEndElement();          //numarea
 
+   xmlWriter.writeStartElement("pagesize");//pagesize
+   xmlWriter.writeCharacters(QString("%1").arg(m_pagesize));
+   xmlWriter.writeEndElement();          //pagesize
+
    j=0;
    AreaDraw *area;
    QListIterator<AreaDraw*> it_area(m_area);
@@ -477,6 +490,28 @@ void ChannelModel::setNumarea(const int &n)
 {
    m_numarea = n;
    emit numareaChanged(m_numarea);
+}
+//---------------------------------------------------------------------------------------------
+qreal ChannelModel::pagesize() const
+{
+   return m_pagesize;
+}
+
+void ChannelModel::setPagesize(const qreal &n)
+{
+   m_pagesize = n;
+   emit pagesizeChanged(m_pagesize);
+}
+//---------------------------------------------------------------------------------------------
+qreal ChannelModel::pageval() const
+{
+   return m_pageval;
+}
+
+void ChannelModel::setPageval(const qreal &n)
+{
+   m_pageval = n;
+   emit pagevalChanged(m_pageval);
 }
 //---------------------------------------------------------------------------------------------
 QVector<int> ChannelModel::deep() const

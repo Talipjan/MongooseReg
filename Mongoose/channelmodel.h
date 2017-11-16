@@ -17,14 +17,16 @@ QT_CHARTS_USE_NAMESPACE
 class ChannelModel : public QObject
 {
    Q_OBJECT
-   Q_PROPERTY(QQmlListProperty<ChElement> data     READ data                     NOTIFY dataChanged)
-   Q_PROPERTY(QQmlListProperty<AreaDraw>  area     READ area                     NOTIFY areaChanged)
-   Q_PROPERTY(                   QString  name     READ name    WRITE setName    NOTIFY nameChanged)
-   Q_PROPERTY(                   QString  driver   READ driver  WRITE setDriver  NOTIFY driverChanged)
-   Q_PROPERTY(                       int  numarea  READ numarea WRITE setNumarea NOTIFY numareaChanged)
-   Q_PROPERTY(              QVector<int>  deep     READ deep                     NOTIFY deepChanged)
-   Q_PROPERTY(              QVector<int>  time     READ time                     NOTIFY timeChanged)
-   Q_PROPERTY(              QVector<int>  dataue   READ dataue                   NOTIFY dataueChanged)
+   Q_PROPERTY(QQmlListProperty<ChElement> data     READ data                       NOTIFY dataChanged)
+   Q_PROPERTY(QQmlListProperty<AreaDraw>  area     READ area                       NOTIFY areaChanged)
+   Q_PROPERTY(                   QString  name     READ name     WRITE setName     NOTIFY nameChanged)
+   Q_PROPERTY(                   QString  driver   READ driver   WRITE setDriver   NOTIFY driverChanged)
+   Q_PROPERTY(                       int  numarea  READ numarea  WRITE setNumarea  NOTIFY numareaChanged)
+   Q_PROPERTY(                     qreal  pagesize READ pagesize WRITE setPagesize NOTIFY pagesizeChanged)
+   Q_PROPERTY(                     qreal  pageval  READ pageval  WRITE setPageval  NOTIFY pagevalChanged)
+   Q_PROPERTY(              QVector<int>  deep     READ deep                       NOTIFY deepChanged)
+   Q_PROPERTY(              QVector<int>  time     READ time                       NOTIFY timeChanged)
+   Q_PROPERTY(              QVector<int>  dataue   READ dataue                     NOTIFY dataueChanged)
    Q_CLASSINFO("DefaultProperty", "data")
 public:
    ChannelModel(QObject *parent = 0);
@@ -42,6 +44,8 @@ public:
    QString name() const;
    QString driver() const;
    int numarea() const;
+   qreal pagesize() const;
+   qreal pageval() const;
 
    QVector<int> deep()   const;
    QVector<int> time()   const;
@@ -55,6 +59,8 @@ signals:
    void deepChanged();
    void timeChanged();
    void numareaChanged(int);
+   void pagesizeChanged(qreal);
+   void pagevalChanged(qreal);
 public slots:
    void setName(const QString &);
    void setDriver(const QString &);
@@ -66,6 +72,8 @@ public slots:
    void parseXML( QXmlStreamReader &xml);
    void ResizeArea();
    void setSizeArea(int index,qreal scale);
+   void setPagesize(const qreal &n);
+   void setPageval(const qreal &n);
 private:
    static void appendData(QQmlListProperty<ChElement> *list, ChElement *value);
    static int countData(QQmlListProperty<ChElement> *list);
@@ -86,6 +94,8 @@ private:
    QString           m_driver;   //имя драйвера
    int               m_numch;    //количество каналов
    int               m_numarea;  //количество дорожек
+   qreal             m_pagesize; //длина дорожки
+   qreal             m_pageval;  //текущий максимум на дорожке ось y
 };
 
 

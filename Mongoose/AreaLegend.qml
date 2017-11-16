@@ -5,38 +5,75 @@ Item {
     property real areaHeight: 50;
 
     Repeater {
+        id:line
+        anchors.margins: 10
+        anchors.fill: parent
+        height: legendch.areaHeight
+        model: dataModel.area
+
+        Rectangle {
+            width: 3
+            x: parent.width * (model.begin/100.0)
+            height: window.height - y
+            border.color: "black"
+            color: "black"
+
+            Component.onCompleted: {
+                if(model.index === 0) {
+                    visible = false;
+                }
+            }
+        }
+    }
+    Rectangle {
+        width: parent.width
+        x: 0
+        height: 1
+        border.color: "black"
+        color: "black"
+    }
+    Rectangle {
+        width: 1
+        x: parent.width
+        height: window.height - y
+        border.color: "black"
+        color: "black"
+    }
+    Repeater {
         id:area
         signal areaChange
         anchors.margins: 10
         anchors.fill: parent
         height: legendch.areaHeight
         model: dataModel.data
+
         Rectangle {
             id: rectangle1
             signal indexChange
-            x: parent.width * (dataModel.area[model.area - 1].begin/100.0)
-            y: (model.areaindex)*(height + 2)
-            width: parent.width * (dataModel.area[model.area - 1].width/100.0)
+            x: parent.width*(dataModel.area[model.area - 1].begin/100.0) + 2
+            y: model.areaindex*(height - 1)
+            width: parent.width*(dataModel.area[model.area - 1].width/100.0) - 2
             height: 50
             color: "#ffffff"
-            radius: 5
-            gradient: Gradient {
-                GradientStop {
-                    position: 0
-                    color: "#ffffff"
-                }
-
-                GradientStop {
-                    position: 0.811
-                    color: "#4a80d1"
-                }
-
-                GradientStop {
-                    position: 1
-                    color: "#000000"
-                }
-            }
             border.color: "black"
+//            radius: 5
+//            gradient: Gradient {
+//                GradientStop {
+//                    position: 0
+//                    color: "#ffffff"
+//                }
+
+//                GradientStop {
+//                    position: 0.811
+//                    color: "#4a80d1"
+//                }
+
+//                GradientStop {
+//                    position: 1
+//                    color: "#000000"
+//                }
+//            }
+
             Text {
                 anchors.centerIn: parent
                 renderType: Text.NativeRendering

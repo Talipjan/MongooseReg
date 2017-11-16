@@ -6,6 +6,7 @@ ChElement::ChElement(QObject *parent) :QObject(parent)
 {
    //m_data = new QVector<QPointF>;
    m_data.reserve(32);
+   m_data.append(0);
 }
 // преобразовываем полученные данные в реальные единицы
 void ChElement::appendData(QString &data, int size)
@@ -147,6 +148,21 @@ void ChElement::setWrpoint(qreal wrpoint)
    m_wrpoint = wrpoint;
 
    emit wrpointChanged(m_wrpoint);
+}
+//-----------------------------------------------
+qreal ChElement::subval() const
+{
+   return m_subval;
+}
+void ChElement::setSubval(qreal subval)
+{
+   if (m_subval == subval) {
+      return;
+   }
+
+   m_subval = subval;
+
+   emit subvalChanged(m_subval);
 }
 //-----------------------------------------------
 int  ChElement::area() const
